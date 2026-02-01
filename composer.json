@@ -27,14 +27,14 @@
     },
     "require": {
         "php": "^8.4",
-        "vireo/framework": "^0.9"
+        "vireo/framework": "^1.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0"
     },
     "autoload": {
         "psr-4": {
-            "Config\\": "config/",
+            "Config\\": "Config/",
             "Features\\": "Features/",
             "Infrastructure\\": "Infrastructure/"
         }

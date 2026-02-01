@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial release of Vireo Starter template
+- Requires Vireo Framework ^1.0.0
 - Vertical Slice Architecture with organized feature modules
 - Authentication system (Login, Register, Forgot Password, Reset Password)
 - User Activity tracking and analytics
