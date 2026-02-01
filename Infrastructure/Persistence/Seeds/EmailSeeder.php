@@ -1,5 +1,7 @@
 <?php
 
+namespace Infrastructure\Persistence\Seeds;
+
 use Framework\Database\Seeds\Seeder;
 
 /**

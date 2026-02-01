@@ -37,7 +37,11 @@
             "Config\\": "Config/",
             "Features\\": "Features/",
             "Infrastructure\\": "Infrastructure/"
-        }
+        },
+        "exclude-from-classmap": [
+            "Infrastructure/Persistence/Migrations",
+            "Infrastructure/Persistence/Seeds"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

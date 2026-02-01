@@ -1,5 +1,7 @@
 <?php
 
+namespace Infrastructure\Persistence\Migrations;
+
 use Framework\Database\Migrations\Migration;
 use Framework\Database\Migrations\Schema;
 use Framework\Database\Migrations\Blueprint;
