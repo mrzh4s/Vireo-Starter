@@ -1,0 +1,43 @@
+# Dependencies
+/node_modules
+/vendor
+/docs
+
+# Build output
+/Infrastructure/Http/Public/assets
+/Infrastructure/Http/Public/.vite
+
+# Environment
+.env
+.env.*
+!.env.example
+.npmrc
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+/storage/logs/*
+
+# Database
+*.db
+*.sqlite
+!.gitkeep
+
+# Cache
+/storage/cache/*
+!storage/cache/.gitkeep
+
+
+# AI Files
+CLAUDE.md
+.claude

@@ -1,0 +1,75 @@
+{
+    "name": "beam/starter",
+    "description": "Beam Framework application starter template with Vertical Slice Architecture and Inertia.js.",
+    "type": "project",
+    "license": "MIT",
+    "keywords": [
+        "framework",
+        "php",
+        "vertical-slice",
+        "starter",
+        "boilerplate",
+        "inertia",
+        "react",
+        "vue"
+    ],
+    "homepage": "https://github.com/mrzh4s/beam-starter",
+    "authors": [
+        {
+            "name": "mrzh4s",
+            "email": "mrzh4s@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/mrzh4s/beam-starter/issues",
+        "source": "https://github.com/mrzh4s/beam-starter",
+        "docs": "https://github.com/mrzh4s/beam-framework#readme"
+    },
+    "require": {
+        "php": "^8.4",
+        "beam/framework": "^0.9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Config\\": "config/",
+            "Features\\": "Features/",
+            "Infrastructure\\": "Infrastructure/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "Tests/"
+        }
+    },
+    "bin": ["beam"],
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php beam key:generate"
+        ],
+        "dev": "./beam dev",
+        "build": "npm run build",
+        "test": "vendor/bin/phpunit",
+        "serve": "./beam serve",
+        "migrate": "./beam migrate",
+        "migrate:rollback": "./beam migrate:rollback",
+        "migrate:status": "./beam migrate:status",
+        "seed": "./beam db:seed"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

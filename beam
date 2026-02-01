@@ -1,0 +1,38 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * beam Framework - CLI Entry Point
+ *
+ * Usage: ./beam <command> [arguments] [options]
+ * Example: ./beam serve --port=8080
+ * Example: ./beam create:user@admin john secret123
+ * Example: php beam list
+ */
+
+// Define root path
+define('ROOT_PATH', __DIR__);
+
+// Set include path
+set_include_path(ROOT_PATH);
+
+// Load Composer autoloader
+if (!file_exists(ROOT_PATH . '/vendor/autoload.php')) {
+    fwrite(STDERR, "Error: Composer dependencies not installed.\n");
+    fwrite(STDERR, "Please run: composer install\n");
+    exit(1);
+}
+
+require_once ROOT_PATH . '/vendor/autoload.php';
+
+// Bootstrap framework (loads helpers, config, etc.)
+Framework\Bootstrap::boot();
+
+// Import Console class
+use Framework\Cli\Console;
+
+// Run console and exit with status code
+$console = Console::getInstance();
+$exitCode = $console->run($argv);
+
+exit($exitCode);
