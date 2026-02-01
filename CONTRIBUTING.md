@@ -1,6 +1,6 @@
-# Contributing to Beam Starter
+# Contributing to Vireo Starter
 
-Thank you for considering contributing to Beam Starter! This document outlines the guidelines for contributing to this project.
+Thank you for considering contributing to Vireo Starter! This document outlines the guidelines for contributing to this project.
 
 ## Code of Conduct
 

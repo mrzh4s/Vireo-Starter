@@ -3,7 +3,7 @@
 /**
  * PHPUnit Test Bootstrap
  *
- * Initializes the testing environment for the Beam Framework
+ * Initializes the testing environment for the Vireo Framework
  */
 
 // Define root path

@@ -29,7 +29,7 @@ export default function Login() {
             Welcome Back
           </h1>
           <p className="text-sm text-slate-600">
-            Sign in to your Beam Framework account
+            Sign in to your Vireo Framework account
           </p>
         </div>
 
@@ -185,7 +185,7 @@ export default function Login() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="px-3 bg-white text-slate-500 font-medium">
-                New to Beam?
+                New to Vireo?
               </span>
             </div>
           </div>

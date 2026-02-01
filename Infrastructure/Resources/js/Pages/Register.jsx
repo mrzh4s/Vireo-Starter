@@ -32,7 +32,7 @@ export default function Register() {
             Create Account
           </h1>
           <p className="text-sm text-slate-600">
-            Get started with Beam Framework today
+            Get started with Vireo Framework today
           </p>
         </div>
 

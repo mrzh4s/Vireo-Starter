@@ -2,7 +2,7 @@
 /**
  * Cache Configuration
  *
- * Configure cache stores and default cache driver for the Beam Framework.
+ * Configure cache stores and default cache driver for the Vireo Framework.
  * Supports multiple drivers: file, redis, memcached, memcache, array, database
  */
 

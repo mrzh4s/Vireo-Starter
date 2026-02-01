@@ -10,8 +10,8 @@ use Framework\Database\DB;
  *
  * Creates a new user with the specified role.
  * Example usage:
- *   ./beam create:user@admin john secret123 --email=john@example.com
- *   ./beam create:user john secret123 --role=moderator
+ *   ./vireo create:user@admin john secret123 --email=john@example.com
+ *   ./vireo create:user john secret123 --role=moderator
  */
 class CreateUserCommand extends Command
 {
@@ -20,8 +20,8 @@ class CreateUserCommand extends Command
      *
      * The @{role=user} syntax allows:
      * - beamm create:user@admin name pass  (role=admin)
-     * - beam create:user name pass --role=admin  (role=admin)
-     * - beam create:user name pass  (role=user, the default)
+     * - vireo create:user name pass --role=admin  (role=admin)
+     * - vireo create:user name pass  (role=user, the default)
      */
     protected string $signature = 'create:user@{role=user} {name} {password} {--email=} {--force}';
 

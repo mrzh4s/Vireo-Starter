@@ -1,6 +1,6 @@
-# Beam Starter
+# Vireo Starter
 
-A modern PHP application starter template built on the [Beam Framework](https://github.com/mrzh4s/beam-framework) with Vertical Slice Architecture and Inertia.js.
+A modern PHP application starter template built on the [Vireo Framework](https://github.com/mrzh4s/vireo-framework) with Vertical Slice Architecture and Inertia.js.
 
 ## Features
 
@@ -28,7 +28,7 @@ A modern PHP application starter template built on the [Beam Framework](https://
 
 ```bash
 # Create a new project
-composer create-project beam/starter my-app
+composer create-project vireo/starter my-app
 
 # Navigate to project directory
 cd my-app
@@ -40,13 +40,13 @@ npm install
 cp .env.example .env
 
 # Generate application key
-./beam key:generate
+./vireo key:generate
 
 # Run database migrations
-./beam migrate
+./vireo migrate
 
 # Seed the database (optional)
-./beam db:seed
+./vireo db:seed
 ```
 
 ## Development
@@ -55,7 +55,7 @@ Start the development servers:
 
 ```bash
 # Start PHP development server
-./beam serve
+./vireo serve
 
 # In a separate terminal, start Vite dev server
 npm run dev
@@ -85,16 +85,16 @@ Visit `http://localhost:8000` in your browser.
 
 ```bash
 # Development
-./beam serve              # Start development server
-./beam dev                # Start dev server with Vite HMR
+./vireo serve              # Start development server
+./vireo dev                # Start dev server with Vite HMR
 npm run dev               # Start Vite dev server
 npm run build             # Build frontend assets
 
 # Database
-./beam migrate            # Run migrations
-./beam migrate:rollback   # Rollback last migration
-./beam migrate:status     # Show migration status
-./beam db:seed            # Run database seeders
+./vireo migrate            # Run migrations
+./vireo migrate:rollback   # Rollback last migration
+./vireo migrate:status     # Show migration status
+./vireo db:seed            # Run database seeders
 
 # Testing
 composer test             # Run PHPUnit tests
@@ -124,7 +124,7 @@ composer test
 
 ## Documentation
 
-- [Beam Framework Documentation](https://github.com/mrzh4s/beam-framework#readme)
+- [Vireo Framework Documentation](https://github.com/mrzh4s/vireo-framework#readme)
 - [Inertia.js Documentation](https://inertiajs.com/)
 - [React Documentation](https://react.dev/)
 - [TailwindCSS Documentation](https://tailwindcss.com/docs)

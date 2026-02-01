@@ -1,8 +1,8 @@
 {
-  "name": "beam-framework",
+  "name": "vireo-framework",
   "version": "1.0.0",
   "type": "module",
-  "description": "Beam Framework - Modern PHP + React with Inertia.js",
+  "description": "Vireo Framework - Modern PHP + React with Inertia.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -1,6 +1,6 @@
 {
-    "name": "beam/starter",
-    "description": "Beam Framework application starter template with Vertical Slice Architecture and Inertia.js.",
+    "name": "vireo/starter",
+    "description": "Vireo Framework application starter template with Vertical Slice Architecture and Inertia.js.",
     "type": "project",
     "license": "MIT",
     "keywords": [
@@ -13,7 +13,7 @@
         "react",
         "vue"
     ],
-    "homepage": "https://github.com/mrzh4s/beam-starter",
+    "homepage": "https://github.com/mrzh4s/vireo-starter",
     "authors": [
         {
             "name": "mrzh4s",
@@ -21,13 +21,13 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/mrzh4s/beam-starter/issues",
-        "source": "https://github.com/mrzh4s/beam-starter",
-        "docs": "https://github.com/mrzh4s/beam-framework#readme"
+        "issues": "https://github.com/mrzh4s/vireo-starter/issues",
+        "source": "https://github.com/mrzh4s/vireo-starter",
+        "docs": "https://github.com/mrzh4s/vireo-framework#readme"
     },
     "require": {
         "php": "^8.4",
-        "beam/framework": "^0.9"
+        "vireo/framework": "^0.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0"
@@ -44,23 +44,23 @@
             "Tests\\": "Tests/"
         }
     },
-    "bin": ["beam"],
+    "bin": ["vireo"],
     "scripts": {
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php beam key:generate"
+            "@php vireo key:generate"
         ],
-        "dev": "./beam dev",
+        "dev": "./vireo dev",
         "build": "npm run build",
         "test": "vendor/bin/phpunit",
-        "serve": "./beam serve",
-        "migrate": "./beam migrate",
-        "migrate:rollback": "./beam migrate:rollback",
-        "migrate:status": "./beam migrate:status",
-        "seed": "./beam db:seed"
+        "serve": "./vireo serve",
+        "migrate": "./vireo migrate",
+        "migrate:rollback": "./vireo migrate:rollback",
+        "migrate:status": "./vireo migrate:status",
+        "seed": "./vireo db:seed"
     },
     "config": {
         "optimize-autoloader": true,

@@ -114,7 +114,7 @@ return [
     */
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'noreply@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Beam Framework'),
+        'name' => env('MAIL_FROM_NAME', 'Vireo Framework'),
     ],
 
     /*
@@ -225,7 +225,7 @@ return [
 
         // Global template variables available in all templates
         'global_vars' => [
-            'app_name' => env('APP_NAME', 'Beam Framework'),
+            'app_name' => env('APP_NAME', 'Vireo Framework'),
             'app_url' => env('APP_URL', 'http://localhost'),
             'support_email' => env('MAIL_SUPPORT_EMAIL', 'support@example.com'),
         ],
@@ -256,7 +256,7 @@ return [
     |
     */
     'headers' => [
-        'X-Mailer' => 'Beam Framework Mailer',
+        'X-Mailer' => 'Vireo Framework Mailer',
         'X-Priority' => '3', // 1 (highest) to 5 (lowest), 3 is normal
         // 'List-Unsubscribe' => '<mailto:unsubscribe@example.com>',
     ],

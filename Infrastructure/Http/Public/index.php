@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Beam Framework - Application Entry Point
+ * Vireo Framework - Application Entry Point
  * File: public/index.php
  */
 

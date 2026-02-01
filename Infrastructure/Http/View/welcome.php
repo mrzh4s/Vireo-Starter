@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome - Beam Framework</title>
+    <title>Welcome - Vireo Framework</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-linear-to-br from-slate-50 to-slate-100 min-h-screen">
@@ -12,7 +12,7 @@
             <!-- Header -->
             <div class="text-center mb-16">
                 <h1 class="text-6xl font-bold text-slate-900 mb-4">
-                    Beam Framework
+                    Vireo Framework
                 </h1>
                 <p class="text-xl text-slate-600">
                     Modern PHP with Vertical Slice Architecture

@@ -2,12 +2,12 @@
 <?php
 
 /**
- * beam Framework - CLI Entry Point
+ * vireo Framework - CLI Entry Point
  *
- * Usage: ./beam <command> [arguments] [options]
- * Example: ./beam serve --port=8080
- * Example: ./beam create:user@admin john secret123
- * Example: php beam list
+ * Usage: ./vireo <command> [arguments] [options]
+ * Example: ./vireo serve --port=8080
+ * Example: ./vireo create:user@admin john secret123
+ * Example: php vireo list
  */
 
 // Define root path

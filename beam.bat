@@ -1,6 +1,6 @@
 @echo off
-REM Beam Framework CLI Launcher (Windows)
-REM Usage: beam <command> [arguments] [options]
+REM Vireo Framework CLI Launcher (Windows)
+REM Usage: vireo <command> [arguments] [options]
 
 setlocal enabledelayedexpansion
 
@@ -34,5 +34,5 @@ exit /b 1
 
 :run
 REM Execute the PHP CLI script
-"%PHP_BINARY%" "%ROOT_DIR%beam" %*
+"%PHP_BINARY%" "%ROOT_DIR%vireo" %*
 exit /b %errorlevel%

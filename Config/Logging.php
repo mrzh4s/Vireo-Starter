@@ -76,7 +76,7 @@ return [
 
         'syslog' => [
             'driver' => 'syslog',
-            'ident' => 'beam-framework',
+            'ident' => 'vireo-framework',
             'facility' => LOG_USER,
         ],
     ],
