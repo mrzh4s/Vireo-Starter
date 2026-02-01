@@ -2,10 +2,10 @@
 
 namespace Infrastructure\Http\Middleware;
 
-use Framework\Validation\Validator;
-use Framework\Validation\ValidationException;
-use Framework\Http\Request;
-use Framework\Http\Response;
+use Vireo\Framework\Validation\Validator;
+use Vireo\Framework\Validation\ValidationException;
+use Vireo\Framework\Http\Request;
+use Vireo\Framework\Http\Response;
 
 /**
  * ValidateMiddleware - Auto-validates request data against rules

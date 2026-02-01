@@ -2,7 +2,7 @@
 
 namespace Infrastructure\Http\Controllers\Email;
 
-use Framework\Email\Tracking\Tracker;
+use Vireo\Framework\Email\Tracking\Tracker;
 
 /**
  * Track Email Open Controller

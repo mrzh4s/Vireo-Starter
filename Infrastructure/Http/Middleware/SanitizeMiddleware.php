@@ -2,7 +2,7 @@
 
 namespace Infrastructure\Http\Middleware;
 
-use Framework\Validation\Sanitizer;
+use Vireo\Framework\Validation\Sanitizer;
 
 /**
  * SanitizeMiddleware - Auto-sanitizes all request input

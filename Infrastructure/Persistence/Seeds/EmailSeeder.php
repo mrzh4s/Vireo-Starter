@@ -2,7 +2,7 @@
 
 namespace Infrastructure\Persistence\Seeds;
 
-use Framework\Database\Seeds\Seeder;
+use Vireo\Framework\Database\Seeds\Seeder;
 
 /**
  * Email Seeder

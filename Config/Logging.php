@@ -1,6 +1,6 @@
 <?php
 
-use Framework\Logging\LogLevel;
+use Vireo\Framework\Logging\LogLevel;
 
 /**
  * Logging Configuration

@@ -2,8 +2,8 @@
 
 namespace Features\Auth\Commands;
 
-use Framework\Cli\Command;
-use Framework\Database\DB;
+use Vireo\Framework\Cli\Command;
+use Vireo\Framework\Database\DB;
 
 /**
  * CreateUserCommand - Create a new user

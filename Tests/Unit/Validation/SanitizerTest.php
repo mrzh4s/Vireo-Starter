@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Validation;
 
-use PHPUnit\Framework\TestCase;
-use Framework\Validation\Sanitizer;
+use PHPUnit\Vireo\Framework\TestCase;
+use Vireo\Framework\Validation\Sanitizer;
 
 class SanitizerTest extends TestCase
 {

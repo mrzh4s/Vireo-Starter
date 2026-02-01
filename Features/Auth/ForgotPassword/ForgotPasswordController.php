@@ -3,7 +3,7 @@ namespace Features\Auth\ForgotPassword;
 
 use Features\Auth\ForgotPassword\ForgotPasswordCommand;
 use Features\Auth\ForgotPassword\ForgotPasswordHandler;
-use Framework\Validation\ValidationException;
+use Vireo\Framework\Validation\ValidationException;
 
 class ForgotPasswordController
 {

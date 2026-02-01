@@ -4,7 +4,7 @@ namespace Features\Auth\ResetPassword;
 use Features\Auth\ResetPassword\ResetPasswordCommand;
 use Features\Auth\ResetPassword\ResetPasswordHandler;
 use Features\Auth\Shared\Exceptions\InvalidResetTokenException;
-use Framework\Validation\ValidationException;
+use Vireo\Framework\Validation\ValidationException;
 
 class ResetPasswordController
 {

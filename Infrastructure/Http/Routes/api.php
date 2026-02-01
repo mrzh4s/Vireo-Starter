@@ -5,7 +5,7 @@
  * File: Infrastructure/Http/Routes/api.php
  */
 
-use Framework\Http\Router;
+use Vireo\Framework\Http\Router;
 
 // ============== SYSTEM API ==============
 Router::post('/api/system/health', function($action, $params) {

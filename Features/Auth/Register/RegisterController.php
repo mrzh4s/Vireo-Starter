@@ -4,7 +4,7 @@ namespace Features\Auth\Register;
 use Features\Auth\Register\RegisterCommand;
 use Features\Auth\Register\RegisterHandler;
 use Features\Auth\Shared\Exceptions\UserAlreadyExistsException;
-use Framework\Validation\ValidationException;
+use Vireo\Framework\Validation\ValidationException;
 
 class RegisterController
 {

@@ -1,6 +1,6 @@
 <?php
 
-use Framework\Http\Router;
+use Vireo\Framework\Http\Router;
 use Infrastructure\Http\Controllers\Email\TrackOpenController;
 use Infrastructure\Http\Controllers\Email\TrackClickController;
 

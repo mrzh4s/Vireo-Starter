@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Validation;
 
-use PHPUnit\Framework\TestCase;
-use Framework\Validation\Validator;
-use Framework\Validation\ValidationException;
+use PHPUnit\Vireo\Framework\TestCase;
+use Vireo\Framework\Validation\Validator;
+use Vireo\Framework\Validation\ValidationException;
 
 class ValidatorTest extends TestCase
 {

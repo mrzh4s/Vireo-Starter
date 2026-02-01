@@ -4,7 +4,7 @@
  * File: Config/Ftp.php
  *
  * Manages FTP connection configurations for the Storage system.
- * Part of Framework\Storage\Connections\FTPConnection
+ * Part of Vireo\Vireo\Vireo\Vireo\Vireo\Vireo\Vireo\Vireo\Vireo\Vireo\Vireo\Vireo\Framework\Storage\Connections\FTPConnection
  *
  * Features:
  * - Dynamic FTP connection discovery from environment variables

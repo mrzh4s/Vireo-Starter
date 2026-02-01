@@ -26,10 +26,10 @@ if (!file_exists(ROOT_PATH . '/vendor/autoload.php')) {
 require_once ROOT_PATH . '/vendor/autoload.php';
 
 // Bootstrap framework (loads helpers, config, etc.)
-Framework\Bootstrap::boot();
+Vireo\Vireo\Framework\Bootstrap::boot();
 
 // Import Console class
-use Framework\Cli\Console;
+use Vireo\Vireo\Framework\Cli\Console;
 
 // Run console and exit with status code
 $console = Console::getInstance();

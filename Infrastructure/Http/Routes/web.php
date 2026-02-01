@@ -5,7 +5,7 @@
  * File: Infrastructure/Http/Routes/web.php
  */
 
-use Framework\Http\Router;
+use Vireo\Framework\Http\Router;
 
 // ============== ROOT ROUTES ==============
 Router::get('/', 'WelcomeController@show', ['public'])->name('root');

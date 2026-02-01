@@ -1,6 +1,6 @@
 <?php
 namespace Features\Auth\Shared\Routes;
-use Framework\Http\Router;
+use Vireo\Framework\Http\Router;
 
 
 // ============== AUTHENTICATION ROUTES ==============

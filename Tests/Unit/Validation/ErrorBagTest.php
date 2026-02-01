@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Validation;
 
-use PHPUnit\Framework\TestCase;
-use Framework\Validation\ErrorBag;
+use PHPUnit\Vireo\Framework\TestCase;
+use Vireo\Framework\Validation\ErrorBag;
 
 class ErrorBagTest extends TestCase
 {

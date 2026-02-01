@@ -19,10 +19,10 @@ set_include_path(ROOT_PATH);
 require_once ROOT_PATH . '/vendor/autoload.php';
 
 // Bootstrap the framework
-Framework\Bootstrap::boot();
+Vireo\Framework\Bootstrap::boot();
 
 // Import Router class
-use Framework\Http\Router;
+use Vireo\Framework\Http\Router;
 
 // Auto-discovery enabled:
 // - Middleware from Infrastructure/Http/Middleware and Features/*/Middleware

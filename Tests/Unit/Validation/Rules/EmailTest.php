@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Validation\Rules;
 
-use PHPUnit\Framework\TestCase;
-use Framework\Validation\Rules\Email;
+use PHPUnit\Vireo\Framework\TestCase;
+use Vireo\Framework\Validation\Rules\Email;
 
 class EmailTest extends TestCase
 {

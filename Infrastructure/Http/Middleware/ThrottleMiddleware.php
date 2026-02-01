@@ -2,9 +2,9 @@
 
 namespace Infrastructure\Http\Middleware;
 
-use Framework\Validation\RateLimiter;
-use Framework\Http\Request;
-use Framework\Http\Response;
+use Vireo\Framework\Validation\RateLimiter;
+use Vireo\Framework\Http\Request;
+use Vireo\Framework\Http\Response;
 
 /**
  * ThrottleMiddleware - Rate limits requests per IP/user
