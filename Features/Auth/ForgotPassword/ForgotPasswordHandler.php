@@ -6,7 +6,6 @@ use Features\Auth\Shared\Ports\UserRepositoryInterface;
 class ForgotPasswordHandler
 {
     private UserRepositoryInterface $repository;
-
     public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;

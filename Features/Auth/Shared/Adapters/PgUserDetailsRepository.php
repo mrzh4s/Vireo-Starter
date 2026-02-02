@@ -11,7 +11,7 @@ use Vireo\Framework\Database\DB;
  *
  * Handles persistence of UserDetails domain entities
  */
-class UserDetailsRepository implements UserDetailsRepositoryInterface
+class PgUserDetailsRepository implements UserDetailsRepositoryInterface
 {
     private const TABLE = 'auth.user_details';
 

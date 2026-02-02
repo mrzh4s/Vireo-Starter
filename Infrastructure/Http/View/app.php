@@ -17,18 +17,18 @@
     <?php else: ?>
         <!-- Production Assets -->
         <?php
-        $manifestPath = ROOT_PATH . '/Infrastructure/Http/Public/assets/.vite/manifest.json';
+        $manifestPath = ROOT_PATH . '/Infrastructure/Http/Public/build/.vite/manifest.json';
         if (file_exists($manifestPath)) {
             $manifest = json_decode(file_get_contents($manifestPath), true);
             $entryKey = 'Infrastructure/Resources/js/app.jsx';
             if (isset($manifest[$entryKey])) {
-                $jsFile = '/assets/' . $manifest[$entryKey]['file'];
+                $jsFile = '/build/' . $manifest[$entryKey]['file'];
                 echo '<script type="module" src="' . $jsFile . '"></script>';
 
                 // Load CSS if exists
                 if (isset($manifest[$entryKey]['css'])) {
                     foreach ($manifest[$entryKey]['css'] as $cssFile) {
-                        echo '<link rel="stylesheet" href="/assets/' . $cssFile . '">';
+                        echo '<link rel="stylesheet" href="/build/' . $cssFile . '">';
                     }
                 }
             }
