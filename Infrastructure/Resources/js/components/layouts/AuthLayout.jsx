@@ -55,10 +55,10 @@ export function AuthLayout({
         <style>
           {`
             .auth-bg-classic {
-              background-image: url('${toAbsoluteUrl('assets/media/images/2600x1200/bg-10.png')}');
+              background-image: url('${toAbsoluteUrl('media/images/2600x1200/bg-10.png')}');
             }
             .dark .auth-bg-classic {
-              background-image: url('${toAbsoluteUrl('assets/media/images/2600x1200/bg-10-dark.png')}');
+              background-image: url('${toAbsoluteUrl('media/images/2600x1200/bg-10-dark.png')}');
             }
           `}
         </style>
@@ -67,7 +67,7 @@ export function AuthLayout({
             <div className="mb-5">
               <Link href="/">
                 <img
-                  src={toAbsoluteUrl('assets/media/app/mini-logo.svg')}
+                  src={toAbsoluteUrl('media/app/mini-logo.svg')}
                   className="h-[35px] max-w-none"
                   alt="Logo"
                 />
@@ -93,10 +93,10 @@ export function AuthLayout({
         <style>
           {`
             .auth-bg-branded {
-              background-image: url('${toAbsoluteUrl('assets/media/images/2600x1600/1.png')}');
+              background-image: url('${toAbsoluteUrl('media/images/2600x1600/1.png')}');
             }
             .dark .auth-bg-branded {
-              background-image: url('${toAbsoluteUrl('assets/media/images/2600x1600/1-dark.png')}');
+              background-image: url('${toAbsoluteUrl('media/images/2600x1600/1-dark.png')}');
             }
           `}
         </style>
@@ -111,7 +111,7 @@ export function AuthLayout({
             <div className="flex flex-col p-8 lg:p-16 gap-4">
               <Link href="/">
                 <img
-                  src={toAbsoluteUrl('assets/media/app/mini-logo.svg')}
+                  src={toAbsoluteUrl('media/app/mini-logo.svg')}
                   className="h-[28px] max-w-none"
                   alt="Logo"
                 />
