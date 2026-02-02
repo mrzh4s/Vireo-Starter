@@ -43,7 +43,7 @@ class EmailSeeder extends Seeder
         ];
 
         foreach ($layouts as $layout) {
-            table('email_layouts')->insert($layout);
+            table('email.layouts')->insert($layout);
         }
     }
 
@@ -52,7 +52,7 @@ class EmailSeeder extends Seeder
      */
     private function seedTemplates(): void
     {
-        $defaultLayoutId = table('email_layouts')->where('slug', 'default')->first()['id'];
+        $defaultLayoutId = table('email.layouts')->where('slug', 'default')->first()['id'];
 
         $templates = [
             [
@@ -107,7 +107,7 @@ class EmailSeeder extends Seeder
         ];
 
         foreach ($templates as $template) {
-            table('email_templates')->insert($template);
+            table('email.templates')->insert($template);
         }
     }
 

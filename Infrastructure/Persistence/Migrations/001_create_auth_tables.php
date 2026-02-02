@@ -8,8 +8,8 @@ use Vireo\Framework\Database\Migrations\Blueprint;
 
 /**
  * Migration: CreateAuthTables
- * Converted from: docs/auth/auth.table.sql
  *
+ * Schema: auth
  * Creates all authentication and authorization tables:
  * - users, user_details
  * - roles, groups
@@ -23,8 +23,6 @@ class CreateAuthTables extends Migration
      */
     public function up(): void
     {
-        $schema = $this->schema();
-
         // Enable UUID extension and create auth schema
         $pdo = \Vireo\Framework\Database\DB::connection('main');
         $pdo->exec('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');

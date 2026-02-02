@@ -59,7 +59,7 @@ class AuthSeeder extends Seeder
 
         foreach ($roles as $role) {
             DB::query(
-                "INSERT INTO roles (name, display_name, description, is_active, created_at, updated_at)
+                "INSERT INTO auth.roles (name, display_name, description, is_active, created_at, updated_at)
                  VALUES (?, ?, ?, true, datetime('now'), datetime('now'))",
                 [$role['name'], $role['display_name'], $role['description']]
             );
@@ -83,7 +83,7 @@ class AuthSeeder extends Seeder
 
         foreach ($groups as $group) {
             DB::query(
-                "INSERT INTO groups (name, display_name, description, is_active, created_at, updated_at)
+                "INSERT INTO auth.groups (name, display_name, description, is_active, created_at, updated_at)
                  VALUES (?, ?, ?, true, datetime('now'), datetime('now'))",
                 [$group['name'], $group['display_name'], $group['description']]
             );
@@ -146,23 +146,23 @@ class AuthSeeder extends Seeder
             // Insert user
             $userId = $this->createUUID();
             DB::query(
-                "INSERT INTO users (id, name, email, password, email_verified_at, is_active, created_at, updated_at)
+                "INSERT INTO auth.users (id, name, email, password, email_verified_at, is_active, created_at, updated_at)
                  VALUES (?, ?, ?, ?, datetime('now'), true, datetime('now'), datetime('now'))",
                 [$userId, $user['name'], $user['email'], $password]
             );
 
             // Insert user details
             DB::query(
-                "INSERT INTO user_details (user_id, first_name, last_name, phone, employee_id, city, state, country, created_at, updated_at)
+                "INSERT INTO auth.user_details (user_id, first_name, last_name, phone, employee_id, city, state, country, created_at, updated_at)
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))",
                 [$userId, $user['first_name'], $user['last_name'], $user['phone'], $user['employee_id'], $user['city'], $user['state'], $user['country']]
             );
 
             // Assign role
-            $roleId = DB::query("SELECT id FROM roles WHERE name = ?", [$user['role']])->fetch(\PDO::FETCH_COLUMN);
+            $roleId = DB::query("SELECT id FROM auth.roles WHERE name = ?", [$user['role']])->fetch(\PDO::FETCH_COLUMN);
             if ($roleId) {
                 DB::query(
-                    "INSERT INTO role_user (user_id, role_id, created_at, updated_at)
+                    "INSERT INTO auth.role_user (user_id, role_id, created_at, updated_at)
                      VALUES (?, ?, datetime('now'), datetime('now'))",
                     [$userId, $roleId]
                 );
@@ -170,10 +170,10 @@ class AuthSeeder extends Seeder
 
             // Assign group
             if ($user['group']) {
-                $groupId = DB::query("SELECT id FROM groups WHERE name = ?", [$user['group']])->fetch(\PDO::FETCH_COLUMN);
+                $groupId = DB::query("SELECT id FROM auth.groups WHERE name = ?", [$user['group']])->fetch(\PDO::FETCH_COLUMN);
                 if ($groupId) {
                     DB::query(
-                        "INSERT INTO group_user (user_id, group_id, created_at, updated_at)
+                        "INSERT INTO auth.group_user (user_id, group_id, created_at, updated_at)
                          VALUES (?, ?, datetime('now'), datetime('now'))",
                         [$userId, $groupId]
                     );

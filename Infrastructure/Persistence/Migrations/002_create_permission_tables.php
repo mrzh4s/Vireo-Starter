@@ -8,8 +8,8 @@ use Vireo\Framework\Database\Migrations\Blueprint;
 
 /**
  * Migration: CreatePermissionTables
- * Converted from: docs/permission/permission.table.sql
  *
+ * Schema: auth
  * Creates permission system tables:
  * - permissions
  * - role_hierarchies, role_permissions
@@ -25,7 +25,7 @@ class CreatePermissionTables extends Migration
     public function up(): void
     {
         // Create permissions table
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('auth.permissions', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->string('display_name');
@@ -42,7 +42,7 @@ class CreatePermissionTables extends Migration
         });
 
         // Create role_hierarchies table (parent-child role relationships)
-        Schema::create('role_hierarchies', function (Blueprint $table) {
+        Schema::create('auth.role_hierarchies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('parent_role_id');
             $table->unsignedBigInteger('child_role_id');
@@ -56,7 +56,7 @@ class CreatePermissionTables extends Migration
         });
 
         // Create role_permissions table (many-to-many)
-        Schema::create('role_permissions', function (Blueprint $table) {
+        Schema::create('auth.role_permissions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('role_id');
             $table->unsignedBigInteger('permission_id');
@@ -65,13 +65,13 @@ class CreatePermissionTables extends Migration
 
             $table->unique(['role_id', 'permission_id']);
             $table->foreign('role_id')->references('id')->on('auth.roles')->onDelete('cascade');
-            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
+            $table->foreign('permission_id')->references('id')->on('auth.permissions')->onDelete('cascade');
             $table->index('role_id');
             $table->index('permission_id');
         });
 
         // Create user_permissions table (direct user permission overrides)
-        Schema::create('user_permissions', function (Blueprint $table) {
+        Schema::create('auth.user_permissions', function (Blueprint $table) {
             $table->id();
             $table->uuid('user_id');
             $table->unsignedBigInteger('permission_id');
@@ -82,7 +82,7 @@ class CreatePermissionTables extends Migration
 
             $table->unique(['user_id', 'permission_id']);
             $table->foreign('user_id')->references('id')->on('auth.users')->onDelete('cascade');
-            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
+            $table->foreign('permission_id')->references('id')->on('auth.permissions')->onDelete('cascade');
             $table->index('user_id');
             $table->index('permission_id');
             $table->index('granted');
@@ -90,7 +90,7 @@ class CreatePermissionTables extends Migration
         });
 
         // Create permission_attributes table (permission metadata)
-        Schema::create('permission_attributes', function (Blueprint $table) {
+        Schema::create('auth.permission_attributes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('permission_id');
             $table->string('attribute_key', 100);
@@ -99,13 +99,13 @@ class CreatePermissionTables extends Migration
             $table->timestamps();
 
             $table->unique(['permission_id', 'attribute_key']);
-            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
+            $table->foreign('permission_id')->references('id')->on('auth.permissions')->onDelete('cascade');
             $table->index('permission_id');
             $table->index('attribute_key');
         });
 
         // Create permission_settings table (system-wide settings)
-        Schema::create('permission_settings', function (Blueprint $table) {
+        Schema::create('auth.permission_settings', function (Blueprint $table) {
             $table->id();
             $table->string('setting_key', 50)->unique();
             $table->text('setting_value')->nullable();
@@ -114,7 +114,7 @@ class CreatePermissionTables extends Migration
         });
 
         // Create permission_audit_log table (audit trail)
-        Schema::create('permission_audit_log', function (Blueprint $table) {
+        Schema::create('auth.permission_audit_log', function (Blueprint $table) {
             $table->id();
             $table->uuid('user_id')->nullable();
             $table->string('action', 100);
@@ -139,12 +139,12 @@ class CreatePermissionTables extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permission_audit_log');
-        Schema::dropIfExists('permission_settings');
-        Schema::dropIfExists('permission_attributes');
-        Schema::dropIfExists('user_permissions');
-        Schema::dropIfExists('role_permissions');
-        Schema::dropIfExists('role_hierarchies');
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('auth.permission_audit_log');
+        Schema::dropIfExists('auth.permission_settings');
+        Schema::dropIfExists('auth.permission_attributes');
+        Schema::dropIfExists('auth.user_permissions');
+        Schema::dropIfExists('auth.role_permissions');
+        Schema::dropIfExists('auth.role_hierarchies');
+        Schema::dropIfExists('auth.permissions');
     }
 }

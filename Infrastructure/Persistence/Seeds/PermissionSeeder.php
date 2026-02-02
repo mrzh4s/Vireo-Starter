@@ -87,7 +87,7 @@ class PermissionSeeder extends Seeder
 
         foreach ($permissions as $permission) {
             DB::query(
-                "INSERT INTO permissions (name, display_name, description, module, category, is_active, created_at, updated_at)
+                "INSERT INTO auth.permissions (name, display_name, description, module, category, is_active, created_at, updated_at)
                  VALUES (?, ?, ?, ?, ?, true, datetime('now'), datetime('now'))",
                 [$permission['name'], $permission['display_name'], $permission['description'], $permission['module'], $permission['category']]
             );
@@ -103,11 +103,11 @@ class PermissionSeeder extends Seeder
     {
         // Get role IDs
         $roles = [
-            'super_admin' => DB::query("SELECT id FROM roles WHERE name = 'super_admin'")->fetch(\PDO::FETCH_COLUMN),
-            'admin' => DB::query("SELECT id FROM roles WHERE name = 'admin'")->fetch(\PDO::FETCH_COLUMN),
-            'manager' => DB::query("SELECT id FROM roles WHERE name = 'manager'")->fetch(\PDO::FETCH_COLUMN),
-            'supervisor' => DB::query("SELECT id FROM roles WHERE name = 'supervisor'")->fetch(\PDO::FETCH_COLUMN),
-            'staff' => DB::query("SELECT id FROM roles WHERE name = 'staff'")->fetch(\PDO::FETCH_COLUMN),
+            'super_admin' => DB::query("SELECT id FROM auth.roles WHERE name = 'super_admin'")->fetch(\PDO::FETCH_COLUMN),
+            'admin' => DB::query("SELECT id FROM auth.roles WHERE name = 'admin'")->fetch(\PDO::FETCH_COLUMN),
+            'manager' => DB::query("SELECT id FROM auth.roles WHERE name = 'manager'")->fetch(\PDO::FETCH_COLUMN),
+            'supervisor' => DB::query("SELECT id FROM auth.roles WHERE name = 'supervisor'")->fetch(\PDO::FETCH_COLUMN),
+            'staff' => DB::query("SELECT id FROM auth.roles WHERE name = 'staff'")->fetch(\PDO::FETCH_COLUMN),
         ];
 
         $hierarchies = [
@@ -123,7 +123,7 @@ class PermissionSeeder extends Seeder
 
             if ($parentId && $childId) {
                 DB::query(
-                    "INSERT INTO role_hierarchies (parent_role_id, child_role_id, created_at, updated_at)
+                    "INSERT INTO auth.role_hierarchies (parent_role_id, child_role_id, created_at, updated_at)
                      VALUES (?, ?, datetime('now'), datetime('now'))",
                     [$parentId, $childId]
                 );
@@ -139,12 +139,12 @@ class PermissionSeeder extends Seeder
     private function seedRolePermissions(): void
     {
         // Super Admin gets ALL permissions
-        $superAdminId = DB::query("SELECT id FROM roles WHERE name = 'super_admin'")->fetch(\PDO::FETCH_COLUMN);
+        $superAdminId = DB::query("SELECT id FROM auth.roles WHERE name = 'super_admin'")->fetch(\PDO::FETCH_COLUMN);
         if ($superAdminId) {
-            $permissions = DB::query("SELECT id FROM permissions")->fetchAll(\PDO::FETCH_COLUMN);
+            $permissions = DB::query("SELECT id FROM auth.permissions")->fetchAll(\PDO::FETCH_COLUMN);
             foreach ($permissions as $permId) {
                 DB::query(
-                    "INSERT INTO role_permissions (role_id, permission_id, created_at, updated_at)
+                    "INSERT INTO auth.role_permissions (role_id, permission_id, created_at, updated_at)
                      VALUES (?, ?, datetime('now'), datetime('now'))",
                     [$superAdminId, $permId]
                 );
@@ -152,14 +152,14 @@ class PermissionSeeder extends Seeder
         }
 
         // Admin gets most permissions (except super admin permissions)
-        $adminId = DB::query("SELECT id FROM roles WHERE name = 'admin'")->fetch(\PDO::FETCH_COLUMN);
+        $adminId = DB::query("SELECT id FROM auth.roles WHERE name = 'admin'")->fetch(\PDO::FETCH_COLUMN);
         if ($adminId) {
             $permissions = DB::query(
-                "SELECT id FROM permissions WHERE name NOT IN ('permissions.manage', 'roles.manage')"
+                "SELECT id FROM auth.permissions WHERE name NOT IN ('permissions.manage', 'roles.manage')"
             )->fetchAll(\PDO::FETCH_COLUMN);
             foreach ($permissions as $permId) {
                 DB::query(
-                    "INSERT INTO role_permissions (role_id, permission_id, created_at, updated_at)
+                    "INSERT INTO auth.role_permissions (role_id, permission_id, created_at, updated_at)
                      VALUES (?, ?, datetime('now'), datetime('now'))",
                     [$adminId, $permId]
                 );
@@ -167,14 +167,14 @@ class PermissionSeeder extends Seeder
         }
 
         // Manager gets project management permissions
-        $managerId = DB::query("SELECT id FROM roles WHERE name = 'manager'")->fetch(\PDO::FETCH_COLUMN);
+        $managerId = DB::query("SELECT id FROM auth.roles WHERE name = 'manager'")->fetch(\PDO::FETCH_COLUMN);
         if ($managerId) {
             $permissionNames = ['users.view', 'users.update', 'projects.view', 'projects.create', 'projects.update', 'projects.approve', 'reports.view', 'reports.create', 'reports.export'];
             foreach ($permissionNames as $name) {
-                $permId = DB::query("SELECT id FROM permissions WHERE name = ?", [$name])->fetch(\PDO::FETCH_COLUMN);
+                $permId = DB::query("SELECT id FROM auth.permissions WHERE name = ?", [$name])->fetch(\PDO::FETCH_COLUMN);
                 if ($permId) {
                     DB::query(
-                        "INSERT INTO role_permissions (role_id, permission_id, created_at, updated_at)
+                        "INSERT INTO auth.role_permissions (role_id, permission_id, created_at, updated_at)
                          VALUES (?, ?, datetime('now'), datetime('now'))",
                         [$managerId, $permId]
                     );
@@ -199,7 +199,7 @@ class PermissionSeeder extends Seeder
 
         foreach ($settings as $setting) {
             DB::query(
-                "INSERT INTO permission_settings (setting_key, setting_value, description, updated_at)
+                "INSERT INTO auth.permission_settings (setting_key, setting_value, description, updated_at)
                  VALUES (?, ?, ?, datetime('now'))",
                 [$setting['key'], $setting['value'], $setting['description']]
             );
