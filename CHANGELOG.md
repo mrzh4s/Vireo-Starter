@@ -5,6 +5,73 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-02-03
+
+### Added
+- **Unified Layout System**
+  - `AppLayout` - Main application layout with sidebar and header navigation
+  - `BlankLayout` - Minimal layout without navigation
+  - `AuthLayout` - Flexible authentication layout with three variants (simple, classic, branded)
+  - `FullWidthLayout` - Layout without sidebar but with header
+  - `CenteredLayout` - Vertically and horizontally centered content layout
+  - Centralized layout exports via `@/components/layouts/index.js`
+  - Comprehensive layout documentation and migration guide
+
+- **UserDetails Domain Model**
+  - Rich domain entity for `auth.user_details` table
+  - Personal information management (first name, last name, phone, DOB, gender)
+  - Address management with full address formatting
+  - Professional information (employee ID, Telegram ID)
+  - Profile information (bio, picture, JSON preferences)
+  - Repository pattern implementation with CRUD operations
+  - Factory methods (`create()`, `fromArray()`)
+  - Conversion methods (`toArray()`, `toJson()`)
+  - Validation helpers (`isProfileComplete()`, `hasCompleteAddress()`)
+  - Fluent setter interface for easy chaining
+
+- **Enhanced SignUp Form**
+  - Organized form sections (User Details, Account Details, Terms)
+  - Separate first name and last name fields
+  - Optional company/domain field with icon
+  - Improved password validation (uppercase, lowercase, number, special character required)
+  - Password strength requirements displayed inline
+  - Server-side validation error integration
+  - Auto-complete attributes for better UX
+  - Responsive grid layout for name fields
+  - Form reset on successful registration
+
+- **Documentation**
+  - Layout system README with usage examples and best practices
+  - Auth module README with SignUp form structure documentation
+  - UserDetails domain README with comprehensive examples
+  - Migration guides for transitioning from old layouts
+
+### Changed
+- **Dashboard**
+  - Now uses `AppLayout` with `.layout` property pattern
+  - Removed inline header/layout code
+  - Consistent with auth pages layout approach
+
+- **Authentication Pages**
+  - All auth pages now use unified `AuthLayout` with `classic` variant
+  - Migrated from separate `ClassicLayout` and `BrandedLayout`
+  - Consistent layout pattern across all authentication flows
+
+- **Application Structure**
+  - Updated `app.php` template with flex classes for proper layout rendering
+  - Enhanced validation schemas with stricter rules
+  - Email normalization (auto-lowercase)
+  - Name validation (letters, spaces, hyphens, apostrophes only)
+
+### Deprecated
+- `@/views/auth/layouts/classic.jsx` - Use `AuthLayout` with `variant="classic"`
+- `@/views/auth/layouts/branded.jsx` - Use `AuthLayout` with `variant="branded"`
+
+### Fixed
+- Blank page rendering issue caused by missing flex/height classes in HTML template
+- Dashboard layout inconsistency with authentication pages
+- Form validation error mapping from backend to frontend
+
 ## [1.0.1] - 2026-02-02
 
 ### Changed
@@ -48,5 +115,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Database migrations and seeders
 - Environment configuration via `.env`
 
+[1.1.0]: https://github.com/mrzh4s/Vireo-Starter/releases/tag/v1.1.0
 [1.0.1]: https://github.com/mrzh4s/Vireo-Starter/releases/tag/v1.0.1
 [1.0.0]: https://github.com/mrzh4s/Vireo-Starter/releases/tag/v1.0.0
