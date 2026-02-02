@@ -12,7 +12,7 @@
 .env.*
 !.env.example
 .npmrc
-
+composer.lock
 # IDE
 .vscode/
 .idea/
