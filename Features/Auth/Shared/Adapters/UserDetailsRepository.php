@@ -3,7 +3,7 @@
 namespace Features\Auth\Shared\Adapters;
 
 use Features\Auth\Shared\Domain\UserDetails;
-use Features\Auth\Shared\Domain\UserDetailsRepositoryInterface;
+use Features\Auth\Shared\Ports\UserDetailsRepositoryInterface;
 use Vireo\Framework\Database\DB;
 
 /**
@@ -11,7 +11,7 @@ use Vireo\Framework\Database\DB;
  *
  * Handles persistence of UserDetails domain entities
  */
-class PgUserDetailsRepository implements UserDetailsRepositoryInterface
+class UserDetailsRepository implements UserDetailsRepositoryInterface
 {
     private const TABLE = 'auth.user_details';
 
@@ -28,7 +28,13 @@ class PgUserDetailsRepository implements UserDetailsRepositoryInterface
             return null;
         }
 
-        return UserDetails::fromArray($result[0]);
+        $row = is_array($result) ? $result[0] : $result->fetch(\PDO::FETCH_ASSOC);
+        
+        if (!$row) {
+            return null;
+        }
+
+        return UserDetails::fromArray($row);
     }
 
     /**
@@ -52,8 +58,12 @@ class PgUserDetailsRepository implements UserDetailsRepositoryInterface
         );
 
         $result = DB::query($sql, $data);
-
-        return UserDetails::fromArray($result[0]);
+        if ($result instanceof \PDOStatement) {
+            $row = $result->fetch(\PDO::FETCH_ASSOC);
+        } else {
+            $row = is_array($result) ? $result[0] : null;
+        }
+        return UserDetails::fromArray($row);
     }
 
     /**
@@ -81,8 +91,12 @@ class PgUserDetailsRepository implements UserDetailsRepositoryInterface
 
         $data['user_id'] = $userId;
         $result = DB::query($sql, $data);
-
-        return UserDetails::fromArray($result[0]);
+        if ($result instanceof \PDOStatement) {
+            $row = $result->fetch(\PDO::FETCH_ASSOC);
+        } else {
+            $row = is_array($result) ? $result[0] : null;
+        }
+        return UserDetails::fromArray($row);
     }
 
     /**
@@ -91,9 +105,7 @@ class PgUserDetailsRepository implements UserDetailsRepositoryInterface
     public function deleteByUserId(string $userId): bool
     {
         $sql = "DELETE FROM " . self::TABLE . " WHERE user_id = :user_id";
-
-        DB::execute($sql, ['user_id' => $userId]);
-
+        DB::query($sql, ['user_id' => $userId]);
         return true;
     }
 
