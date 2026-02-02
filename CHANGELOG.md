@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2026-02-03
+
+### Changed
+- **Build Output Directory**
+  - Vite now outputs compiled assets to `build/` directory instead of `assets/`
+  - Updated all asset references in app.php from `/assets/` to `/build/`
+  - Removed `/assets/` from .gitignore to allow storing static media files
+  - Build artifacts location: `Infrastructure/Http/Public/build/`
+  - This change enables committing media files in `assets/` directory to GitHub
+
+### Technical Details
+- Added `assetsDir: 'build'` configuration to vite.config.js
+- Updated manifest path to `build/.vite/manifest.json`
+- All JS and CSS references now use `/build/` prefix
+
 ## [1.1.1] - 2026-02-03
 
 ### Fixed
@@ -123,6 +138,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Database migrations and seeders
 - Environment configuration via `.env`
 
+[1.1.2]: https://github.com/mrzh4s/Vireo-Starter/releases/tag/v1.1.2
 [1.1.1]: https://github.com/mrzh4s/Vireo-Starter/releases/tag/v1.1.1
 [1.1.0]: https://github.com/mrzh4s/Vireo-Starter/releases/tag/v1.1.0
 [1.0.1]: https://github.com/mrzh4s/Vireo-Starter/releases/tag/v1.0.1
