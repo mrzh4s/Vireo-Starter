@@ -1,6 +1,6 @@
 <?php
 
-namespace Features\Auth\Shared\Infrastructure;
+namespace Features\Auth\Shared\Adapters;
 
 use Features\Auth\Shared\Domain\UserDetails;
 use Features\Auth\Shared\Domain\UserDetailsRepositoryInterface;
@@ -11,7 +11,7 @@ use Vireo\Framework\Database\DB;
  *
  * Handles persistence of UserDetails domain entities
  */
-class UserDetailsRepository implements UserDetailsRepositoryInterface
+class PgUserDetailsRepository implements UserDetailsRepositoryInterface
 {
     private const TABLE = 'auth.user_details';
 

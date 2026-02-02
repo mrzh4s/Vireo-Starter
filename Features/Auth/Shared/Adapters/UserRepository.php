@@ -5,7 +5,7 @@ use Features\Auth\Shared\Ports\UserRepositoryInterface;
 use Features\Auth\Shared\Domain\User;
 use PDO;
 
-class UserRepository implements UserRepositoryInterface
+class PgUserRepository implements UserRepositoryInterface
 {
     private PDO $pdo;
 

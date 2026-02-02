@@ -12,8 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `AppLayout` - Main application layout with sidebar and header navigation
   - `BlankLayout` - Minimal layout without navigation
   - `AuthLayout` - Flexible authentication layout with three variants (simple, classic, branded)
-  - `FullWidthLayout` - Layout without sidebar but with header
-  - `CenteredLayout` - Vertically and horizontally centered content layout
   - Centralized layout exports via `@/components/layouts/index.js`
   - Comprehensive layout documentation and migration guide
 
@@ -62,10 +60,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced validation schemas with stricter rules
   - Email normalization (auto-lowercase)
   - Name validation (letters, spaces, hyphens, apostrophes only)
-
-### Deprecated
-- `@/views/auth/layouts/classic.jsx` - Use `AuthLayout` with `variant="classic"`
-- `@/views/auth/layouts/branded.jsx` - Use `AuthLayout` with `variant="branded"`
 
 ### Fixed
 - Blank page rendering issue caused by missing flex/height classes in HTML template

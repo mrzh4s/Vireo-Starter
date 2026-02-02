@@ -3,6 +3,7 @@ namespace Features\Auth\Shared\Routes;
 use Vireo\Framework\Http\Router;
 
 
+
 // ============== AUTHENTICATION PAGE ROUTES ==============
 Router::get('/auth/signin', 'Features\\Auth\\Login\\LoginController@show', ['guest'])->name('auth.signin');
 Router::get('/auth/signup', 'Features\\Auth\\Register\\RegisterController@show', ['guest'])->name('auth.signup');
