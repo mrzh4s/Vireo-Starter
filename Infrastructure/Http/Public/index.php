@@ -24,9 +24,6 @@ Vireo\Framework\Bootstrap::boot();
 // Import Router class
 use Vireo\Framework\Http\Router;
 
-// Auto-discovery enabled:
-// - Middleware from Infrastructure/Http/Middleware and Features/*/Middleware
-// - Routes from Infrastructure/Http/Routes and Features/*/Routes
 
 // Execute router
 Router::route();

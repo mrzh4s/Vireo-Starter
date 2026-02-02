@@ -11,10 +11,6 @@ use Vireo\Framework\Http\Router;
 Router::get('/', 'WelcomeController@show', ['public'])->name('root');
 
 
-// ============== DASHBOARD ROUTES ==============
-Router::get('/dashboard', 'DashboardController@show', ['auth'])->name('dashboard');
-
-
 // Load Error routes
 // 404 Error Page
 Router::get('/error/404', function($params) {

@@ -15,6 +15,13 @@ class ResetPasswordController
         $this->handler = $handler;
     }
 
+    public function show()
+    {
+        // Get token from query params if available
+        $token = $_GET['token'] ?? null;
+        return inertia('auth/pages/ChangePassword', ['token' => $token]);
+    }
+
     public function reset(array $params)
     {
         $isInertia = isset($_SERVER['HTTP_X_INERTIA']) && $_SERVER['HTTP_X_INERTIA'] === 'true';

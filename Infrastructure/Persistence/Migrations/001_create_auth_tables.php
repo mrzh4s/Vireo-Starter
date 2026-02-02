@@ -178,6 +178,31 @@ class CreateAuthTables extends Migration
             $table->foreign('user_id')->references('id')->on('auth.users')->onDelete('cascade');
             $table->index('user_id');
         });
+
+        // Create user_summary view for easy querying with roles and groups
+        $pdo->exec("
+            CREATE OR REPLACE VIEW auth.user_summary AS
+            SELECT
+                u.id,
+                u.name,
+                u.email,
+                u.password,
+                u.email_verified_at,
+                u.is_active,
+                u.last_login_at,
+                u.remember_token,
+                u.created_at,
+                u.updated_at,
+                STRING_AGG(DISTINCT r.name, ', ') AS roles,
+                STRING_AGG(DISTINCT g.name, ', ') AS groups
+            FROM auth.users u
+            LEFT JOIN auth.role_user ru ON u.id = ru.user_id
+            LEFT JOIN auth.roles r ON ru.role_id = r.id
+            LEFT JOIN auth.group_user gu ON u.id = gu.user_id
+            LEFT JOIN auth.groups g ON gu.group_id = g.id
+            GROUP BY u.id, u.name, u.email, u.password, u.email_verified_at,
+                     u.is_active, u.last_login_at, u.remember_token, u.created_at, u.updated_at
+        ");
     }
 
     /**
@@ -185,6 +210,10 @@ class CreateAuthTables extends Migration
      */
     public function down(): void
     {
+        // Drop the view first
+        $pdo = \Vireo\Framework\Database\DB::connection('main');
+        $pdo->exec('DROP VIEW IF EXISTS auth.user_summary');
+
         Schema::dropIfExists('auth.verification_codes');
         Schema::dropIfExists('auth.login_attempts');
         Schema::dropIfExists('auth.password_resets');

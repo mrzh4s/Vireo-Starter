@@ -85,15 +85,25 @@ class PermissionSeeder extends Seeder
             ['name' => 'reports.manage', 'display_name' => 'Manage Reports', 'description' => 'Full report management', 'module' => 'reports', 'category' => 'admin'],
         ];
 
+        $insertedCount = 0;
         foreach ($permissions as $permission) {
-            DB::query(
-                "INSERT INTO auth.permissions (name, display_name, description, module, category, is_active, created_at, updated_at)
-                 VALUES (?, ?, ?, ?, ?, true, datetime('now'), datetime('now'))",
-                [$permission['name'], $permission['display_name'], $permission['description'], $permission['module'], $permission['category']]
-            );
+            // Check if permission already exists
+            $existing = DB::query("SELECT id FROM auth.permissions WHERE name = ?", [$permission['name']])->fetch();
+            if (!$existing) {
+                DB::query(
+                    "INSERT INTO auth.permissions (name, display_name, description, module, category, is_active, created_at, updated_at)
+                     VALUES (?, ?, ?, ?, ?, true, NOW(), NOW())",
+                    [$permission['name'], $permission['display_name'], $permission['description'], $permission['module'], $permission['category']]
+                );
+                $insertedCount++;
+            }
         }
 
-        $this->log('Permissions seeded: ' . count($permissions) . ' permissions created');
+        if ($insertedCount > 0) {
+            $this->log('Permissions seeded: ' . $insertedCount . ' permissions created');
+        } else {
+            $this->log('Permissions already exist, skipping');
+        }
     }
 
     /**
@@ -117,20 +127,34 @@ class PermissionSeeder extends Seeder
             ['parent' => 'supervisor', 'child' => 'staff'],
         ];
 
+        $insertedCount = 0;
         foreach ($hierarchies as $hierarchy) {
             $parentId = $roles[$hierarchy['parent']] ?? null;
             $childId = $roles[$hierarchy['child']] ?? null;
 
             if ($parentId && $childId) {
-                DB::query(
-                    "INSERT INTO auth.role_hierarchies (parent_role_id, child_role_id, created_at, updated_at)
-                     VALUES (?, ?, datetime('now'), datetime('now'))",
+                // Check if hierarchy already exists
+                $existing = DB::query(
+                    "SELECT id FROM auth.role_hierarchies WHERE parent_role_id = ? AND child_role_id = ?",
                     [$parentId, $childId]
-                );
+                )->fetch();
+
+                if (!$existing) {
+                    DB::query(
+                        "INSERT INTO auth.role_hierarchies (parent_role_id, child_role_id, created_at, updated_at)
+                         VALUES (?, ?, NOW(), NOW())",
+                        [$parentId, $childId]
+                    );
+                    $insertedCount++;
+                }
             }
         }
 
-        $this->log('Role hierarchies seeded');
+        if ($insertedCount > 0) {
+            $this->log('Role hierarchies seeded: ' . $insertedCount . ' hierarchies created');
+        } else {
+            $this->log('Role hierarchies already exist, skipping');
+        }
     }
 
     /**
@@ -138,16 +162,28 @@ class PermissionSeeder extends Seeder
      */
     private function seedRolePermissions(): void
     {
+        $totalInserted = 0;
+
         // Super Admin gets ALL permissions
         $superAdminId = DB::query("SELECT id FROM auth.roles WHERE name = 'super_admin'")->fetch(\PDO::FETCH_COLUMN);
+
         if ($superAdminId) {
             $permissions = DB::query("SELECT id FROM auth.permissions")->fetchAll(\PDO::FETCH_COLUMN);
             foreach ($permissions as $permId) {
-                DB::query(
-                    "INSERT INTO auth.role_permissions (role_id, permission_id, created_at, updated_at)
-                     VALUES (?, ?, datetime('now'), datetime('now'))",
+                // Check if role-permission already exists
+                $existing = DB::query(
+                    "SELECT id FROM auth.role_permissions WHERE role_id = ? AND permission_id = ?",
                     [$superAdminId, $permId]
-                );
+                )->fetch();
+
+                if (!$existing) {
+                    DB::query(
+                        "INSERT INTO auth.role_permissions (role_id, permission_id, created_at, updated_at)
+                         VALUES (?, ?, NOW(), NOW())",
+                        [$superAdminId, $permId]
+                    );
+                    $totalInserted++;
+                }
             }
         }
 
@@ -158,11 +194,20 @@ class PermissionSeeder extends Seeder
                 "SELECT id FROM auth.permissions WHERE name NOT IN ('permissions.manage', 'roles.manage')"
             )->fetchAll(\PDO::FETCH_COLUMN);
             foreach ($permissions as $permId) {
-                DB::query(
-                    "INSERT INTO auth.role_permissions (role_id, permission_id, created_at, updated_at)
-                     VALUES (?, ?, datetime('now'), datetime('now'))",
+                // Check if role-permission already exists
+                $existing = DB::query(
+                    "SELECT id FROM auth.role_permissions WHERE role_id = ? AND permission_id = ?",
                     [$adminId, $permId]
-                );
+                )->fetch();
+
+                if (!$existing) {
+                    DB::query(
+                        "INSERT INTO auth.role_permissions (role_id, permission_id, created_at, updated_at)
+                         VALUES (?, ?, NOW(), NOW())",
+                        [$adminId, $permId]
+                    );
+                    $totalInserted++;
+                }
             }
         }
 
@@ -173,16 +218,29 @@ class PermissionSeeder extends Seeder
             foreach ($permissionNames as $name) {
                 $permId = DB::query("SELECT id FROM auth.permissions WHERE name = ?", [$name])->fetch(\PDO::FETCH_COLUMN);
                 if ($permId) {
-                    DB::query(
-                        "INSERT INTO auth.role_permissions (role_id, permission_id, created_at, updated_at)
-                         VALUES (?, ?, datetime('now'), datetime('now'))",
+                    // Check if role-permission already exists
+                    $existing = DB::query(
+                        "SELECT id FROM auth.role_permissions WHERE role_id = ? AND permission_id = ?",
                         [$managerId, $permId]
-                    );
+                    )->fetch();
+
+                    if (!$existing) {
+                        DB::query(
+                            "INSERT INTO auth.role_permissions (role_id, permission_id, created_at, updated_at)
+                             VALUES (?, ?, NOW(), NOW())",
+                            [$managerId, $permId]
+                        );
+                        $totalInserted++;
+                    }
                 }
             }
         }
 
-        $this->log('Role permissions seeded');
+        if ($totalInserted > 0) {
+            $this->log('Role permissions seeded: ' . $totalInserted . ' role-permission assignments created');
+        } else {
+            $this->log('Role permissions already exist, skipping');
+        }
     }
 
     /**
@@ -197,14 +255,28 @@ class PermissionSeeder extends Seeder
             ['key' => 'audit_enabled', 'value' => 'true', 'description' => 'Enable permission audit logging'],
         ];
 
+        $insertedCount = 0;
         foreach ($settings as $setting) {
-            DB::query(
-                "INSERT INTO auth.permission_settings (setting_key, setting_value, description, updated_at)
-                 VALUES (?, ?, ?, datetime('now'))",
-                [$setting['key'], $setting['value'], $setting['description']]
-            );
+            // Check if setting already exists
+            $existing = DB::query(
+                "SELECT id FROM auth.permission_settings WHERE setting_key = ?",
+                [$setting['key']]
+            )->fetch();
+
+            if (!$existing) {
+                DB::query(
+                    "INSERT INTO auth.permission_settings (setting_key, setting_value, description, updated_at)
+                     VALUES (?, ?, ?, NOW())",
+                    [$setting['key'], $setting['value'], $setting['description']]
+                );
+                $insertedCount++;
+            }
         }
 
-        $this->log('Permission settings seeded');
+        if ($insertedCount > 0) {
+            $this->log('Permission settings seeded: ' . $insertedCount . ' settings created');
+        } else {
+            $this->log('Permission settings already exist, skipping');
+        }
     }
 }

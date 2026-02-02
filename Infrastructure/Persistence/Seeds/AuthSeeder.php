@@ -57,15 +57,25 @@ class AuthSeeder extends Seeder
             ['name' => 'guest', 'display_name' => 'Guest', 'description' => 'Limited guest access'],
         ];
 
+        $insertedCount = 0;
         foreach ($roles as $role) {
-            DB::query(
-                "INSERT INTO auth.roles (name, display_name, description, is_active, created_at, updated_at)
-                 VALUES (?, ?, ?, true, datetime('now'), datetime('now'))",
-                [$role['name'], $role['display_name'], $role['description']]
-            );
+            // Check if role already exists
+            $existing = DB::query("SELECT id FROM auth.roles WHERE name = ?", [$role['name']])->fetch();
+            if (!$existing) {
+                DB::query(
+                    "INSERT INTO auth.roles (name, display_name, description, is_active, created_at, updated_at)
+                     VALUES (?, ?, ?, true, NOW(), NOW())",
+                    [$role['name'], $role['display_name'], $role['description']]
+                );
+                $insertedCount++;
+            }
         }
 
-        $this->log('Roles seeded: ' . count($roles) . ' roles created');
+        if ($insertedCount > 0) {
+            $this->log('Roles seeded: ' . $insertedCount . ' roles created');
+        } else {
+            $this->log('Roles already exist, skipping');
+        }
     }
 
     /**
@@ -81,15 +91,25 @@ class AuthSeeder extends Seeder
             ['name' => 'board', 'display_name' => 'Board Members', 'description' => 'Board of directors and executives'],
         ];
 
+        $insertedCount = 0;
         foreach ($groups as $group) {
-            DB::query(
-                "INSERT INTO auth.groups (name, display_name, description, is_active, created_at, updated_at)
-                 VALUES (?, ?, ?, true, datetime('now'), datetime('now'))",
-                [$group['name'], $group['display_name'], $group['description']]
-            );
+            // Check if group already exists
+            $existing = DB::query("SELECT id FROM auth.groups WHERE name = ?", [$group['name']])->fetch();
+            if (!$existing) {
+                DB::query(
+                    "INSERT INTO auth.groups (name, display_name, description, is_active, created_at, updated_at)
+                     VALUES (?, ?, ?, true, NOW(), NOW())",
+                    [$group['name'], $group['display_name'], $group['description']]
+                );
+                $insertedCount++;
+            }
         }
 
-        $this->log('Groups seeded: ' . count($groups) . ' groups created');
+        if ($insertedCount > 0) {
+            $this->log('Groups seeded: ' . $insertedCount . ' groups created');
+        } else {
+            $this->log('Groups already exist, skipping');
+        }
     }
 
     /**
@@ -142,19 +162,26 @@ class AuthSeeder extends Seeder
             ],
         ];
 
+        $insertedCount = 0;
         foreach ($users as $user) {
+            // Check if user already exists
+            $existing = DB::query("SELECT id FROM auth.users WHERE email = ?", [$user['email']])->fetch();
+            if ($existing) {
+                continue;
+            }
+
             // Insert user
             $userId = $this->createUUID();
             DB::query(
                 "INSERT INTO auth.users (id, name, email, password, email_verified_at, is_active, created_at, updated_at)
-                 VALUES (?, ?, ?, ?, datetime('now'), true, datetime('now'), datetime('now'))",
+                 VALUES (?, ?, ?, ?, NOW(), true, NOW(), NOW())",
                 [$userId, $user['name'], $user['email'], $password]
             );
 
             // Insert user details
             DB::query(
                 "INSERT INTO auth.user_details (user_id, first_name, last_name, phone, employee_id, city, state, country, created_at, updated_at)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))",
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())",
                 [$userId, $user['first_name'], $user['last_name'], $user['phone'], $user['employee_id'], $user['city'], $user['state'], $user['country']]
             );
 
@@ -163,7 +190,7 @@ class AuthSeeder extends Seeder
             if ($roleId) {
                 DB::query(
                     "INSERT INTO auth.role_user (user_id, role_id, created_at, updated_at)
-                     VALUES (?, ?, datetime('now'), datetime('now'))",
+                     VALUES (?, ?, NOW(), NOW())",
                     [$userId, $roleId]
                 );
             }
@@ -174,14 +201,20 @@ class AuthSeeder extends Seeder
                 if ($groupId) {
                     DB::query(
                         "INSERT INTO auth.group_user (user_id, group_id, created_at, updated_at)
-                         VALUES (?, ?, datetime('now'), datetime('now'))",
+                         VALUES (?, ?, NOW(), NOW())",
                         [$userId, $groupId]
                     );
                 }
             }
+
+            $insertedCount++;
         }
 
-        $this->log('Users seeded: ' . count($users) . ' users created');
+        if ($insertedCount > 0) {
+            $this->log('Users seeded: ' . $insertedCount . ' users created');
+        } else {
+            $this->log('Users already exist, skipping');
+        }
     }
 
     /**

@@ -14,6 +14,11 @@ class ForgotPasswordController
         $this->handler = $handler;
     }
 
+    public function show()
+    {
+        return inertia('auth/pages/ResetPassword');
+    }
+
     public function sendResetLink(array $params)
     {
         $isInertia = isset($_SERVER['HTTP_X_INERTIA']) && $_SERVER['HTTP_X_INERTIA'] === 'true';

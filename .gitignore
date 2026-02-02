@@ -5,6 +5,7 @@
 
 # Build output
 /Infrastructure/Http/Public/assets
+/Infrastructure/Http/Public/build
 /Infrastructure/Http/Public/.vite
 
 # Environment

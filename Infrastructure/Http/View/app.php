@@ -36,7 +36,7 @@
         ?>
     <?php endif; ?>
 </head>
-<body>
+<body class="flex min-h-screen flex-col">
     <div id="app" data-page='<?= $page ?>'></div>
 </body>
 </html>

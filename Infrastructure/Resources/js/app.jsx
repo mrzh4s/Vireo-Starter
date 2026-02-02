@@ -1,31 +1,55 @@
-import './app.css';
+import './styles/globals.css';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
-
-// Import all page components
-const views = import.meta.glob('./Pages/**/*.jsx', { eager: true });
-
-// Get the app element
-const el = document.getElementById('app');
-
-// Parse initial page data
-const initialPage = JSON.parse(el.dataset.page);
+import { ThemeProvider } from 'next-themes';
+import { HelmetProvider } from 'react-helmet-async';
+import { Toaster } from '@/components/ui/sonner';
 
 createInertiaApp({
-  id: 'app',
-  resolve: (name) => {
-    const page = views[`./Pages/${name}.jsx`];
-    if (!page) {
+  resolve: async (name) => {
+    const pages = import.meta.glob('./views/**/*.jsx');
+
+    if (!pages[`./views/${name}.jsx`]) {
       throw new Error(`Page not found: ${name}`);
     }
-    return page.default;
+
+    const page = await pages[`./views/${name}.jsx`]();
+    const PageComponent = page.default;
+
+    // Handle layout wrapping
+    const Layout = PageComponent.layout;
+    if (Layout) {
+      return (props) => (
+        <Layout>
+          <PageComponent {...props} />
+        </Layout>
+      );
+    }
+
+    return PageComponent;
   },
   setup({ el, App, props }) {
-    createRoot(el).render(<App {...props} />);
+    createRoot(el).render(
+      <StrictMode>
+        <HelmetProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            storageKey="vite-theme"
+            enableSystem
+            disableTransitionOnChange
+            enableColorScheme
+          >
+            <Toaster />
+            <App {...props} />
+          </ThemeProvider>
+        </HelmetProvider>
+      </StrictMode>
+    );
   },
   progress: {
     color: '#4B5563',
     showSpinner: true,
   },
-  page: initialPage,
 });

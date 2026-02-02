@@ -15,6 +15,11 @@ class RegisterController
         $this->handler = $handler;
     }
 
+    public function show()
+    {
+        return inertia('auth/pages/SignUp');
+    }
+
     public function register(array $params)
     {
         $isInertia = isset($_SERVER['HTTP_X_INERTIA']) && $_SERVER['HTTP_X_INERTIA'] === 'true';
@@ -51,6 +56,7 @@ class RegisterController
                 'status' => 'success',
                 'data' => $result
             ];
+            
         } catch (UserAlreadyExistsException $e) {
             if ($isInertia) {
                 $_SESSION['error'] = $e->getMessage();

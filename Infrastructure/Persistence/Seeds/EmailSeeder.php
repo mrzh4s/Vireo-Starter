@@ -43,7 +43,11 @@ class EmailSeeder extends Seeder
         ];
 
         foreach ($layouts as $layout) {
-            table('email.layouts')->insert($layout);
+            // Check if layout already exists
+            $existing = table('email.layouts')->where('slug', $layout['slug'])->first();
+            if (!$existing) {
+                table('email.layouts')->insert($layout);
+            }
         }
     }
 
@@ -107,7 +111,11 @@ class EmailSeeder extends Seeder
         ];
 
         foreach ($templates as $template) {
-            table('email.templates')->insert($template);
+            // Check if template already exists
+            $existing = table('email.templates')->where('slug', $template['slug'])->first();
+            if (!$existing) {
+                table('email.templates')->insert($template);
+            }
         }
     }
 
