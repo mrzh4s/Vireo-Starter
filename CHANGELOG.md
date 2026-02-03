@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-03
+
+### Added
+- **Flash Message System**
+  - `FlashMessages` component for automatic toast notifications across the application
+  - `AppWrapper` component providing flash message context to all pages
+  - Centralized toast handling using Sonner library
+  - Support for success, error, warning, and info message types
+  - Duplicate message prevention with Set-based tracking
+  - Memory leak protection with automatic cleanup after 50 messages
+
+### Changed
+- **Authentication Controllers**
+  - Migrated from client-side error handling to server-side flash messages
+  - `LoginController` now uses `flash_success()` and `flash_error()` helpers
+  - `RegisterController` uses flash messages for all error scenarios
+  - Implemented proper HTTP 303 redirects for Inertia.js POST-Redirect-GET pattern
+  - Replaced direct `$_SESSION` manipulation with `session_set()` helpers
+  - Validation errors now display as toast notifications plus field-specific errors
+
+- **Authentication Pages**
+  - `SignIn.jsx` simplified with removed client-side error handling
+  - `SignUp.jsx` removed Alert component and error state management
+  - Both pages now rely on automatic flash message display
+  - Cleaner component code with reduced complexity
+
+### Technical Details
+- Flash messages flow: Backend `flash_*()` helpers → Session → Inertia props → React toast
+- Toast durations: Success (4s), Error (5s), Info (4s), Warning (4s)
+- Uses Inertia's built-in flash message protocol via `props.flash`
+- Proper session persistence across redirects with 303 status codes
+
 ## [1.1.2] - 2026-02-03
 
 ### Changed
@@ -138,6 +170,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Database migrations and seeders
 - Environment configuration via `.env`
 
+[1.2.0]: https://github.com/mrzh4s/Vireo-Starter/releases/tag/v1.2.0
 [1.1.2]: https://github.com/mrzh4s/Vireo-Starter/releases/tag/v1.1.2
 [1.1.1]: https://github.com/mrzh4s/Vireo-Starter/releases/tag/v1.1.1
 [1.1.0]: https://github.com/mrzh4s/Vireo-Starter/releases/tag/v1.1.0
