@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff, LoaderCircleIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Link, router, usePage } from '@inertiajs/react';
-import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -56,26 +55,8 @@ function SignInPage() {
       password: values.password,
       remember: values.rememberMe,
     }, {
-      // Don't manually navigate - let the backend redirect handle it
-      // The backend will redirect to /dashboard on success or /auth/signin on failure
-      onError: (errors) => {
-        // Handle different error formats
-        let errorMessage = 'Invalid email or password';
-
-        if (errors.message) {
-          errorMessage = errors.message;
-        } else if (errors.email) {
-          errorMessage = Array.isArray(errors.email) ? errors.email[0] : errors.email;
-        } else if (typeof errors === 'string') {
-          errorMessage = errors;
-        }
-
-        toast.error(errorMessage, {
-          id: 'login-error', // Prevent duplicate toasts
-          duration: 5000,
-        });
-        setIsProcessing(false);
-      },
+      // Backend redirects with flash message on both success and error
+      // FlashMessages component will display the toast automatically
       onFinish: () => {
         setIsProcessing(false);
       },

@@ -47,8 +47,12 @@ class RegisterController
 
             // Handle Inertia request (from UI)
             if ($isInertia) {
-                $_SESSION['success'] = $result['message'] ?? 'Registration successful!';
-                redirect_to('/auth/signin');
+                // Flash success message
+                flash_success($result['message'] ?? 'Registration successful! Please sign in to continue.');
+
+                // Use 303 redirect for Inertia
+                header('Location: /auth/signin', true, 303);
+                exit;
             }
 
             // Handle JSON API request
@@ -59,8 +63,12 @@ class RegisterController
             
         } catch (UserAlreadyExistsException $e) {
             if ($isInertia) {
-                $_SESSION['error'] = $e->getMessage();
-                redirect_back('/auth/register');
+                // Flash error message
+                flash_error($e->getMessage());
+
+                // Use 303 redirect back to signup page
+                header('Location: /auth/signup', true, 303);
+                exit;
             }
             return [
                 'status' => 'error',
@@ -68,9 +76,18 @@ class RegisterController
             ];
         } catch (ValidationException $e) {
             if ($isInertia) {
-                $_SESSION['errors'] = $e->getErrors();
-                $_SESSION['old'] = $params;
-                redirect_back('/auth/register');
+                // Flash validation errors as a single error message
+                $errorMessages = array_values($e->getErrors());
+                $firstError = is_array($errorMessages[0]) ? $errorMessages[0][0] : $errorMessages[0];
+                flash_error($firstError);
+
+                // Also keep field-specific errors for form display
+                inertia_errors($e->getErrors());
+                inertia_old($params);
+
+                // Use 303 redirect back to signup page
+                header('Location: /auth/signup', true, 303);
+                exit;
             }
             return [
                 'status' => 'error',
@@ -83,8 +100,12 @@ class RegisterController
             error_log('Stack trace: ' . $e->getTraceAsString());
 
             if ($isInertia) {
-                $_SESSION['error'] = 'An error occurred during registration';
-                redirect_back('/auth/register');
+                // Flash error message
+                flash_error('An error occurred during registration');
+
+                // Use 303 redirect back to signup page
+                header('Location: /auth/signup', true, 303);
+                exit;
             }
             return [
                 'status' => 'error',

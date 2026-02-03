@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  AlertCircle,
   Eye,
   EyeOff,
   LoaderCircleIcon,
@@ -9,7 +8,6 @@ import {
 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Link, router, usePage } from '@inertiajs/react';
-import { Alert, AlertIcon, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -30,7 +28,6 @@ function SignUpPage() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState(null);
   const { errors: serverErrors } = usePage().props;
 
   const form = useForm({
@@ -74,16 +71,8 @@ function SignUpPage() {
       password_confirmation: values.confirmPassword,
       terms: values.terms ? 1 : 0,
     }, {
-      onSuccess: () => {
-        // Clear form on success
-        form.reset();
-        router.visit('/auth/signin');
-      },
-      onError: (errors) => {
-        const errorMessage = errors.message || errors.email || 'An error occurred during registration. Please try again.';
-        setError(errorMessage);
-        setIsProcessing(false);
-      },
+      // Backend redirects with flash message on both success and error
+      // FlashMessages component will display the toast automatically
       onFinish: () => {
         setIsProcessing(false);
       },
@@ -103,19 +92,6 @@ function SignUpPage() {
             Create your account to get started
           </p>
         </div>
-
-        {error && (
-          <Alert
-            variant="destructive"
-            appearance="light"
-            onClose={() => setError(null)}
-          >
-            <AlertIcon>
-              <AlertCircle />
-            </AlertIcon>
-            <AlertTitle>{error}</AlertTitle>
-          </Alert>
-        )}
 
         {/* User Details Section */}
         <div className="space-y-4">

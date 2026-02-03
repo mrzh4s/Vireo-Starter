@@ -31,11 +31,10 @@ class LoginController
             $result = $this->handler->handle($command, $ipAddress);
 
             // Set session data for authenticated user
-            $_SESSION['authenticated'] = true;
-            $_SESSION['user_id'] = $result['user']['id'];
-            $_SESSION['user'] = $result['user'];
-            $_SESSION['session_id'] = $result['session_id'];
-
+            session_set('authenticated', true);
+            session_set('user_id', $result['user']['id']);
+            session_set('user', $result['user']);
+            session_set('session_id', $result['session_id']);
             // Handle remember me
             if (isset($params['remember']) && $params['remember']) {
                 setcookie('remember_token', $result['session_id'], time() + (86400 * 30), '/', '', true, true);
@@ -43,7 +42,12 @@ class LoginController
 
             // Handle Inertia request (from UI)
             if ($isInertia) {
-                return redirect_to('/dashboard');
+                // Flash success message
+                flash_success('Welcome back! You have successfully signed in.');
+
+                // Use 303 redirect for Inertia
+                header('Location: /dashboard', true, 303);
+                exit;
             }
 
             // Handle JSON API request
@@ -53,13 +57,12 @@ class LoginController
             ];
         } catch (InvalidCredentialsException $e) {
             if ($isInertia) {
-                // Flash validation errors for Inertia
-                inertia_errors([
-                    'email' => $e->getMessage()
-                ]);
+                // Flash error message for Inertia
+                flash_error($e->getMessage());
 
-                // Redirect back to login page
-                return redirect_to('/auth/signin');
+                // Use 303 redirect back to login page
+                header('Location: /auth/signin', true, 303);
+                exit;
             }
 
             // Handle JSON API request
@@ -81,7 +84,7 @@ class LoginController
         }
 
         // Clear session data
-        $_SESSION = [];
+        session_clear();
         session_destroy();
 
         // Handle Inertia request (from UI)

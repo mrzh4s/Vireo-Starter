@@ -5,6 +5,7 @@ import { createInertiaApp } from '@inertiajs/react';
 import { ThemeProvider } from 'next-themes';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from '@/components/ui/sonner';
+import { AppWrapper } from '@/components/AppWrapper';
 
 createInertiaApp({
   resolve: async (name) => {
@@ -21,13 +22,19 @@ createInertiaApp({
     const Layout = PageComponent.layout;
     if (Layout) {
       return (props) => (
-        <Layout>
-          <PageComponent {...props} />
-        </Layout>
+        <AppWrapper>
+          <Layout>
+            <PageComponent {...props} />
+          </Layout>
+        </AppWrapper>
       );
     }
 
-    return PageComponent;
+    return (props) => (
+      <AppWrapper>
+        <PageComponent {...props} />
+      </AppWrapper>
+    );
   },
   setup({ el, App, props }) {
     createRoot(el).render(
